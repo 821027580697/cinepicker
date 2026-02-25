@@ -1,26 +1,155 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ==============================
+   Pretendard 폰트 (CDN)
+   ============================== */
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 
+/* ==============================
+   다크모드: class 전략 (next-themes)
+   ============================== */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ==============================
+   커스텀 테마 설정
+   ============================== */
 @theme inline {
+  /* --- 폰트 --- */
+  --font-sans: "Pretendard Variable", "Inter", var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: ui-monospace, monospace;
+
+  /* --- 브랜드 컬러 --- */
+  --color-primary: #E50914;
+  --color-primary-hover: #C2070F;
+  --color-primary-light: #FF3D47;
+  --color-gold: #FFD700;
+  --color-gold-hover: #E6C200;
+  --color-gold-light: #FFE44D;
+
+  /* --- 배경 / 전경 --- */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+
+  /* --- 표면 / 카드 --- */
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-card: var(--card);
+  --color-card-hover: var(--card-hover);
+
+  /* --- 중립 컬러 --- */
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  /* --- 오버레이 --- */
+  --color-overlay: var(--overlay);
+
+  /* --- 반응형 브레이크포인트 --- */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ==============================
+   라이트모드 CSS 변수
+   ============================== */
+:root {
+  --background: #FFFFFF;
+  --foreground: #171717;
+  --surface: #F5F5F5;
+  --surface-hover: #E5E5E5;
+  --card: #FFFFFF;
+  --card-hover: #F5F5F5;
+  --border: #E5E5E5;
+  --muted: #737373;
+  --muted-foreground: #a3a3a3;
+  --overlay: rgba(0, 0, 0, 0.5);
 }
 
+/* ==============================
+   다크모드 CSS 변수
+   디자인 가이드:
+   - 기본 배경: #0D0D0D
+   - 카드 배경: #1A1A2E
+   ============================== */
+.dark {
+  --background: #0D0D0D;
+  --foreground: #EDEDED;
+  --surface: #141414;
+  --surface-hover: #1F1F1F;
+  --card: #1A1A2E;
+  --card-hover: #242444;
+  --border: #2A2A2A;
+  --muted: #A3A3A3;
+  --muted-foreground: #737373;
+  --overlay: rgba(0, 0, 0, 0.7);
+}
+
+/* ==============================
+   기본 스타일
+   ============================== */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Pretendard Variable", "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+/* 부드러운 다크모드 전환 */
+html.dark {
+  color-scheme: dark;
+}
+
+/* 모든 전환에 transition duration-300 기본 적용 */
+*, *::before, *::after {
+  transition-property: background-color, border-color, color, fill, stroke, opacity, box-shadow;
+  transition-duration: 150ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 모션 선호 설정 존중 */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+/* ==============================
+   스크롤바 스타일
+   ============================== */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+}
+
+/* ==============================
+   포커스 링 스타일
+   ============================== */
+:focus-visible {
+  outline: 2px solid #E50914;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* ==============================
+   선택 영역 스타일
+   ============================== */
+::selection {
+  background-color: rgba(229, 9, 20, 0.2);
+  color: inherit;
 }
