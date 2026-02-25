@@ -89,11 +89,14 @@ async function fetchTMDB<T>(
   options: RequestInit & { next?: { revalidate?: number } } = {}
 ): Promise<T> {
   // 1단계: API 키 확인
+  // DATABASE_URL과 마찬가지로, API 키가 없으면 에러를 던지지 않고
+  // 콘솔 경고만 출력합니다. (Vercel 빌드 / 초기 개발 시 크래시 방지)
   const apiKey = process.env.TMDB_API_KEY;
   if (!apiKey) {
-    throw new Error(
-      "TMDB_API_KEY 환경 변수가 설정되지 않았습니다. .env.local 파일을 확인하세요."
+    console.warn(
+      "[TMDB] TMDB_API_KEY 환경 변수가 설정되지 않았습니다. .env.local 파일을 확인하세요."
     );
+    return null as unknown as T;
   }
 
   // 2단계: URL 및 쿼리 파라미터 구성
