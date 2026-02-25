@@ -6,14 +6,9 @@
  * SearchModal은 dynamic import로 지연 로딩됩니다 (초기 번들 크기 절감).
  */
 
-import dynamic from "next/dynamic";
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
-
-/** 검색 모달: 사용자 인터랙션 시에만 필요 → 코드 스플리팅 */
-const SearchModal = dynamic(() => import("@/components/common/SearchModal"), {
-  ssr: false,
-});
+import SearchModal from "@/components/common/SearchModal";
 
 export default function MainLayout({
   children,

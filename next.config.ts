@@ -57,8 +57,8 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ["framer-motion", "zustand"],
   },
 
-  /* React 컴파일러 최적화 */
-  reactCompiler: true,
+  /* React 컴파일러 최적화 (babel-plugin-react-compiler 설치 필요) */
+  // reactCompiler: true,
 };
 
 export default nextConfig;
