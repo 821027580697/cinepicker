@@ -1,9 +1,10 @@
-@import "tailwindcss";
-
 /* ==============================
    Pretendard 폰트 (CDN)
+   @import는 반드시 모든 규칙보다 먼저 위치해야 합니다.
    ============================== */
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
+
+@import "tailwindcss";
 
 /* ==============================
    다크모드: class 전략 (next-themes)
