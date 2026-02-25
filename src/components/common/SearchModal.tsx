@@ -14,6 +14,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAppStore } from "@/store/use-app-store";
@@ -49,7 +50,7 @@ export default function SearchModal() {
   /** 검색 입력 필드 참조 (자동 포커스용) */
   const inputRef = useRef<HTMLInputElement>(null);
   /** 디바운스 타이머 참조 */
-  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>(null);
 
   // ──────────────────────────────
   // 1단계: 모달 열릴 때 초기 설정
@@ -383,12 +384,14 @@ export default function SearchModal() {
                                      transition-colors duration-300 hover:bg-surface-hover"
                         >
                           {/* 썸네일 이미지 */}
-                          <div className="h-14 w-10 shrink-0 overflow-hidden rounded bg-surface">
+                          <div className="relative h-14 w-10 shrink-0 overflow-hidden rounded bg-surface">
                             {getImagePath(item) ? (
-                              <img
+                              <Image
                                 src={`https://image.tmdb.org/t/p/w92${getImagePath(item)}`}
                                 alt={getTitle(item)}
-                                className="h-full w-full object-cover"
+                                fill
+                                sizes="40px"
+                                className="object-cover"
                                 loading="lazy"
                               />
                             ) : (

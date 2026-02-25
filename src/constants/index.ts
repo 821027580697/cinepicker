@@ -64,3 +64,44 @@ export const SEARCH = {
   /** 로컬스토리지 키 */
   STORAGE_KEY: "cinepickr-recent-searches",
 } as const;
+
+/**
+ * TMDB 장르 ID → 한글 이름 매핑
+ *
+ * 영화 및 TV 장르를 통합 관리합니다.
+ * ContentCard, HeroBanner 등 여러 컴포넌트에서 공유됩니다.
+ *
+ * @see https://developer.themoviedb.org/reference/genre-movie-list
+ * @see https://developer.themoviedb.org/reference/genre-tv-list
+ */
+export const GENRE_MAP: Record<number, string> = {
+  /* 영화 장르 */
+  28: "액션",
+  12: "모험",
+  16: "애니메이션",
+  35: "코미디",
+  80: "범죄",
+  99: "다큐멘터리",
+  18: "드라마",
+  10751: "가족",
+  14: "판타지",
+  36: "역사",
+  27: "공포",
+  10402: "음악",
+  9648: "미스터리",
+  10749: "로맨스",
+  878: "SF",
+  10770: "TV 영화",
+  53: "스릴러",
+  10752: "전쟁",
+  37: "서부",
+  /* TV 장르 */
+  10759: "액션/모험",
+  10762: "키즈",
+  10763: "뉴스",
+  10764: "리얼리티",
+  10765: "SF/판타지",
+  10766: "연속극",
+  10767: "토크쇼",
+  10768: "전쟁/정치",
+} as const;

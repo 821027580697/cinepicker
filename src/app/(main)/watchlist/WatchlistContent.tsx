@@ -66,7 +66,7 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
   const tvCount = items.filter((i) => i.contentType === "tv").length;
 
   // ──────────────────────────────
-  // TMDB API에서 콘텐츠 정보 로드
+  // 서버 API 라우트를 통해 콘텐츠 정보 로드 (API 키 보호)
   // ──────────────────────────────
   useEffect(() => {
     const fetchContentInfo = async () => {
@@ -75,26 +75,16 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
         if (contentInfoMap[key]) return; // 이미 로드됨
 
         try {
-          // 클라이언트에서 직접 TMDB API를 호출하지 않고,
-          // 기본 정보만 표시 (서버에서 추가 fetch 가능)
-          // 여기서는 간소화를 위해 포스터 URL 패턴만 사용
-          const url = `https://api.themoviedb.org/3/${item.contentType}/${item.contentId}?api_key=${process.env.NEXT_PUBLIC_TMDB_API_KEY || ""}&language=ko-KR`;
-
-          const res = await fetch(url);
+          // 서버 API 라우트 경유 → TMDB API 키 노출 방지
+          const res = await fetch(
+            `/api/content/${item.contentId}?type=${item.contentType}`
+          );
           if (!res.ok) return;
 
-          const data = await res.json();
-          const info: ContentInfo = {
-            id: data.id,
-            title: item.contentType === "movie" ? data.title : data.name,
-            posterPath: data.poster_path,
-            voteAverage: data.vote_average,
-            releaseDate: item.contentType === "movie" ? data.release_date : data.first_air_date,
-          };
-
-          setContentInfoMap((prev) => ({ ...prev, [key]: info }));
+          const data: ContentInfo = await res.json();
+          setContentInfoMap((prev) => ({ ...prev, [key]: data }));
         } catch {
-          // TMDB 호출 실패 시 무시
+          // API 호출 실패 시 무시
         }
       });
 
@@ -138,9 +128,9 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
   );
 
   // ──────────────────────────────
-  // 포스터 URL 생성
+  // 포스터 URL 생성 (w342: 카드 그리드 최적 크기)
   // ──────────────────────────────
-  const getPosterUrl = (path: string | null) => {
+  const getWatchlistPosterUrl = (path: string | null) => {
     if (!path) return "/images/no-poster.svg";
     return `https://image.tmdb.org/t/p/w342${path}`;
   };
@@ -207,7 +197,7 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
                   >
                     <div className="relative aspect-[2/3] w-full">
                       <Image
-                        src={getPosterUrl(info?.posterPath || null)}
+                        src={getWatchlistPosterUrl(info?.posterPath || null)}
                         alt={info?.title || `콘텐츠 #${item.contentId}`}
                         fill
                         sizes="(max-width: 640px) 45vw, (max-width: 768px) 30vw, 20vw"

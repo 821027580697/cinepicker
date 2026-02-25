@@ -8,7 +8,7 @@
  * @see https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
  */
 
-import { PrismaClient } from "@/generated/prisma";
+import { PrismaClient } from "@/generated/prisma/client";
 
 // 전역 객체에 Prisma 인스턴스 타입 선언
 const globalForPrisma = globalThis as unknown as {

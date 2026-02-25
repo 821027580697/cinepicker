@@ -11,6 +11,7 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { motion } from "framer-motion";
@@ -97,9 +98,11 @@ export default function ProfileContent({ profile }: ProfileContentProps) {
           {/* 아바타 */}
           <div className="h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-primary/20 sm:h-28 sm:w-28">
             {user.image ? (
-              <img
+              <Image
                 src={user.image}
                 alt={user.name}
+                width={112}
+                height={112}
                 className="h-full w-full object-cover"
               />
             ) : (

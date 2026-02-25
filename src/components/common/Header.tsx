@@ -17,6 +17,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
@@ -143,9 +144,11 @@ export default function Header() {
               aria-label="내 프로필 페이지로 이동"
             >
               {session.user.image ? (
-                <img
+                <Image
                   src={session.user.image}
                   alt={session.user.name || "프로필"}
+                  width={32}
+                  height={32}
                   className="h-full w-full object-cover"
                 />
               ) : (

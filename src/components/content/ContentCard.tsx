@@ -15,44 +15,13 @@
  */
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { getPosterUrl } from "@/lib/tmdb";
 import { getYear, truncateText, cn } from "@/utils";
-
-/** 장르 ID → 장르 이름 매핑 (TMDB 기본 장르) */
-const GENRE_MAP: Record<number, string> = {
-  28: "액션",
-  12: "모험",
-  16: "애니메이션",
-  35: "코미디",
-  80: "범죄",
-  99: "다큐멘터리",
-  18: "드라마",
-  10751: "가족",
-  14: "판타지",
-  36: "역사",
-  27: "공포",
-  10402: "음악",
-  9648: "미스터리",
-  10749: "로맨스",
-  878: "SF",
-  10770: "TV 영화",
-  53: "스릴러",
-  10752: "전쟁",
-  37: "서부",
-  /* TV 장르 */
-  10759: "액션/모험",
-  10762: "키즈",
-  10763: "뉴스",
-  10764: "리얼리티",
-  10765: "SF/판타지",
-  10766: "연속극",
-  10767: "토크쇼",
-  10768: "전쟁/정치",
-};
+import { GENRE_MAP } from "@/constants";
 
 // ==============================
 // 컴포넌트 Props
@@ -79,7 +48,8 @@ interface ContentCardProps {
   rank?: number;
 }
 
-export default function ContentCard({
+/** React.memo로 래핑: 캐러셀 스크롤 등 부모 상태 변경 시 불필요한 리렌더링 방지 */
+export default memo(function ContentCard({
   id,
   type,
   title,
@@ -96,8 +66,8 @@ export default function ContentCard({
   /** 상세 페이지 URL 생성 */
   const detailUrl = type === "movie" ? `/movies/${id}` : `/tv/${id}`;
 
-  /** 포스터 이미지 URL (w500 사이즈) */
-  const posterUrl = getPosterUrl(posterPath, "w500");
+  /** 포스터 이미지 URL (w342 사이즈: 카드 최대 200px 대비 최적 크기) */
+  const posterUrl = getPosterUrl(posterPath, "w342");
 
   /** 장르 이름 배열 (최대 2개) */
   const genres = genreIds
@@ -205,4 +175,4 @@ export default function ContentCard({
       </div>
     </Link>
   );
-}
+});

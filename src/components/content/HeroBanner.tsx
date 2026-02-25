@@ -20,41 +20,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { getBackdropUrl } from "@/lib/tmdb";
 import { truncateText, cn } from "@/utils";
+import { GENRE_MAP } from "@/constants";
 import type { TrendingItem } from "@/types/tmdb";
-
-// ==============================
-// 장르 ID → 장르 이름 매핑
-// ==============================
-
-const GENRE_MAP: Record<number, string> = {
-  28: "액션",
-  12: "모험",
-  16: "애니메이션",
-  35: "코미디",
-  80: "범죄",
-  99: "다큐멘터리",
-  18: "드라마",
-  10751: "가족",
-  14: "판타지",
-  36: "역사",
-  27: "공포",
-  10402: "음악",
-  9648: "미스터리",
-  10749: "로맨스",
-  878: "SF",
-  10770: "TV 영화",
-  53: "스릴러",
-  10752: "전쟁",
-  37: "서부",
-  10759: "액션/모험",
-  10762: "키즈",
-  10763: "뉴스",
-  10764: "리얼리티",
-  10765: "SF/판타지",
-  10766: "연속극",
-  10767: "토크쇼",
-  10768: "전쟁/정치",
-};
 
 // ==============================
 // 애니메이션 Variants
@@ -166,8 +133,8 @@ export default function HeroBanner({ items }: HeroBannerProps) {
     .map((gid) => GENRE_MAP[gid])
     .filter(Boolean);
 
-  /** 백드롭 이미지 URL */
-  const backdropUrl = getBackdropUrl(currentItem.backdrop_path, "original");
+  /** 백드롭 이미지 URL (w1280: original 대비 ~60% 용량 절감, 충분한 해상도) */
+  const backdropUrl = getBackdropUrl(currentItem.backdrop_path, "w1280");
 
   return (
     <section
