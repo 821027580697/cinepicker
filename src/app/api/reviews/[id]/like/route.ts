@@ -14,7 +14,7 @@ import { prisma } from "@/lib/prisma";
 
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   // 데이터베이스 연결 확인 (DATABASE_URL 미설정 시 503 응답)
   if (!prisma) {
@@ -25,6 +25,9 @@ export async function POST(
   }
 
   try {
+    // Next.js 15+: params는 Promise이므로 await 필요
+    const { id } = await params;
+
     // 1단계: 인증 확인
     const session = await getServerSession(authOptions);
     if (!session?.user?.id) {
@@ -35,7 +38,7 @@ export async function POST(
     }
 
     const userId = session.user.id;
-    const reviewId = params.id;
+    const reviewId = id;
 
     // 2단계: 리뷰 존재 여부 확인
     const review = await prisma.review.findUnique({
