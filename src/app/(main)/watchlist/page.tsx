@@ -17,6 +17,9 @@ import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import WatchlistContent from "./WatchlistContent";
 
+// 빌드 시 DB 호출을 방지하기 위해 동적 렌더링 강제
+export const dynamic = "force-dynamic";
+
 // SEO 메타데이터
 export const metadata: Metadata = {
   title: "보고싶다",

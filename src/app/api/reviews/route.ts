@@ -28,6 +28,14 @@ const REVIEWS_PER_PAGE = 10;
 // ==============================
 
 export async function GET(request: NextRequest) {
+  // 데이터베이스 연결 확인 (DATABASE_URL 미설정 시 503 응답)
+  if (!prisma) {
+    return NextResponse.json(
+      { error: "데이터베이스가 연결되지 않았습니다." },
+      { status: 503 }
+    );
+  }
+
   const { searchParams } = new URL(request.url);
 
   // 1단계: 쿼리 파라미터 추출
@@ -148,6 +156,14 @@ export async function GET(request: NextRequest) {
 // ==============================
 
 export async function POST(request: NextRequest) {
+  // 데이터베이스 연결 확인 (DATABASE_URL 미설정 시 503 응답)
+  if (!prisma) {
+    return NextResponse.json(
+      { error: "데이터베이스가 연결되지 않았습니다." },
+      { status: 503 }
+    );
+  }
+
   try {
     // 1단계: 인증 확인
     const session = await getServerSession(authOptions);

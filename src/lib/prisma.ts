@@ -5,6 +5,9 @@
  * 개발 환경에서는 globalThis에 인스턴스를 캐싱하고,
  * 프로덕션 환경에서는 매번 새 인스턴스를 생성합니다.
  *
+ * DATABASE_URL이 없을 경우 null을 반환하여 DB 없이도 앱이 동작하도록 합니다.
+ * (Vercel 빌드 시 DATABASE_URL 미설정 상태에서도 빌드가 실패하지 않도록 방어)
+ *
  * @see https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
  */
 
@@ -15,10 +18,16 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
-// 기존 인스턴스가 있으면 재사용, 없으면 새로 생성
-export const prisma = globalForPrisma.prisma ?? new PrismaClient();
+// DATABASE_URL이 있을 때만 PrismaClient 생성
+// 환경변수가 없으면 null 반환하여 DB 없이도 앱이 크래시되지 않음
+export const prisma =
+  globalForPrisma.prisma ??
+  (process.env.DATABASE_URL
+    ? new PrismaClient()
+    : (null as unknown as PrismaClient));
 
 // 개발 환경에서만 전역 캐싱 (핫 리로딩 대응)
-if (process.env.NODE_ENV !== "production") {
+// DATABASE_URL이 있을 때만 캐싱
+if (process.env.NODE_ENV !== "production" && process.env.DATABASE_URL) {
   globalForPrisma.prisma = prisma;
 }

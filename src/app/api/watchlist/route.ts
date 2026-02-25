@@ -20,6 +20,14 @@ import { prisma } from "@/lib/prisma";
 // ==============================
 
 export async function GET(request: NextRequest) {
+  // 데이터베이스 연결 확인 (DATABASE_URL 미설정 시 503 응답)
+  if (!prisma) {
+    return NextResponse.json(
+      { error: "데이터베이스가 연결되지 않았습니다." },
+      { status: 503 }
+    );
+  }
+
   try {
     // 1단계: 인증 확인
     const session = await getServerSession(authOptions);
@@ -86,6 +94,14 @@ export async function GET(request: NextRequest) {
 // ==============================
 
 export async function POST(request: NextRequest) {
+  // 데이터베이스 연결 확인 (DATABASE_URL 미설정 시 503 응답)
+  if (!prisma) {
+    return NextResponse.json(
+      { error: "데이터베이스가 연결되지 않았습니다." },
+      { status: 503 }
+    );
+  }
+
   try {
     // 1단계: 인증 확인
     const session = await getServerSession(authOptions);

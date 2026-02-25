@@ -22,7 +22,8 @@ import { prisma } from "@/lib/prisma";
 
 export const authOptions: NextAuthOptions = {
   // Prisma 어댑터: 사용자, 계정, 세션 정보를 DB에 저장
-  adapter: PrismaAdapter(prisma) as NextAuthOptions["adapter"],
+  // DATABASE_URL이 없으면 어댑터를 비활성화하여 빌드 시 크래시 방지
+  ...(prisma ? { adapter: PrismaAdapter(prisma) as NextAuthOptions["adapter"] } : {}),
 
   // OAuth 제공자 설정
   providers: [
