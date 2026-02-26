@@ -135,7 +135,7 @@ export default async function TVDetailPage({ params }: TVDetailPageProps) {
       <article className="min-h-screen bg-background text-foreground">
         {/* ── 히어로 섹션 ── */}
         <section
-          className="relative h-[400px] w-full md:h-[500px] lg:h-[600px]"
+          className="relative h-[300px] w-full sm:h-[400px] md:h-[500px] lg:h-[600px]"
           aria-label="TV 시리즈 히어로 배너"
         >
           <Image
@@ -149,9 +149,9 @@ export default async function TVDetailPage({ params }: TVDetailPageProps) {
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/40 to-transparent" />
 
-          <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end p-4 pb-8 md:flex-row md:items-end md:gap-8 lg:p-8 lg:pb-12">
-            {/* 포스터 */}
-            <div className="relative -mt-20 h-[280px] w-[180px] shrink-0 overflow-hidden rounded-lg shadow-xl md:h-[360px] md:w-[240px] lg:h-[450px] lg:w-[300px]">
+          <div className="relative z-10 mx-auto flex h-full max-w-7xl flex-col justify-end px-4 pb-6 sm:px-6 md:flex-row md:items-end md:gap-8 lg:px-8 lg:pb-12">
+            {/* 포스터: 모바일에서는 숨기고, sm 이상에서 표시 */}
+            <div className="relative hidden h-[280px] w-[180px] shrink-0 overflow-hidden rounded-lg shadow-xl sm:block md:h-[360px] md:w-[240px] lg:h-[450px] lg:w-[300px]">
               <Image
                 src={getPosterUrl(show.poster_path, "w500")}
                 alt={show.name}
@@ -163,17 +163,17 @@ export default async function TVDetailPage({ params }: TVDetailPageProps) {
             </div>
 
             {/* 텍스트 정보 */}
-            <div className="mt-6 flex-1 text-white md:mt-0">
-              <h1 className="text-3xl font-bold md:text-4xl lg:text-5xl">
+            <div className="flex-1 text-white">
+              <h1 className="text-2xl font-bold sm:text-3xl md:text-4xl lg:text-5xl">
                 {show.name}
               </h1>
               {show.original_name !== show.name && (
-                <p className="mt-1 text-lg text-white/70 md:text-xl">
+                <p className="mt-1 text-sm text-white/70 sm:text-lg md:text-xl">
                   {show.original_name}
                 </p>
               )}
 
-              <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm md:text-base">
+              <div className="mt-2 flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs sm:mt-3 sm:gap-x-4 sm:gap-y-2 sm:text-sm md:text-base">
                 <div className="flex items-center gap-1">
                   <span className="text-gold">★</span>
                   <span className="font-semibold">{tmdbRating.toFixed(1)}</span>
@@ -184,21 +184,21 @@ export default async function TVDetailPage({ params }: TVDetailPageProps) {
                 <span>{show.genres.map((g) => g.name).join(", ")}</span>
                 <span className="text-white/40">•</span>
                 <span>{show.number_of_seasons} 시즌</span>
-                <span className="text-white/40">•</span>
-                <span>{show.number_of_episodes} 에피소드</span>
+                <span className="hidden text-white/40 sm:inline">•</span>
+                <span className="hidden sm:inline">{show.number_of_episodes} 에피소드</span>
               </div>
 
               {/* 제작자 */}
               {creator && (
-                <p className="mt-3 text-sm text-white/70">
+                <p className="mt-2 text-xs text-white/70 sm:mt-3 sm:text-sm">
                   <span className="font-semibold text-white">제작:</span>{" "}
                   {creator.name}
                 </p>
               )}
 
-              {/* 태그라인 */}
+              {/* 태그라인 (모바일에서 숨김) */}
               {show.tagline && (
-                <p className="mt-3 text-sm italic text-white/60">
+                <p className="mt-2 hidden text-sm italic text-white/60 sm:block sm:mt-3">
                   &ldquo;{show.tagline}&rdquo;
                 </p>
               )}

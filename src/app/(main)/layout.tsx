@@ -8,6 +8,7 @@
 
 import Header from "@/components/common/Header";
 import Footer from "@/components/common/Footer";
+import MobileNav from "@/components/common/MobileNav";
 import SearchModal from "@/components/common/SearchModal";
 
 export default function MainLayout({
@@ -21,14 +22,18 @@ export default function MainLayout({
       <Header />
 
       {/* 헤더 높이만큼 상단 패딩 (fixed 헤더 대응) */}
+      {/* 모바일 하단 네비게이션 높이만큼 하단 패딩 추가 (pb-16 md:pb-0) */}
       {/* 시맨틱 <main> 태그로 접근성 지원 */}
-      <main id="main-content" className="flex-1 pt-16">
+      <main id="main-content" className="flex-1 pb-16 pt-16 md:pb-0">
         {/* 키보드 네비게이션 — 본문으로 건너뛰기 앵커 대상 */}
         {children}
       </main>
 
       {/* 하단 푸터 */}
       <Footer />
+
+      {/* 모바일 하단 네비게이션 (md 이하에서만 표시) */}
+      <MobileNav />
 
       {/* 검색 모달 (전역) */}
       <SearchModal />

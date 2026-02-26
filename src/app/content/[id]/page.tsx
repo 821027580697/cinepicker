@@ -218,7 +218,8 @@ export default async function ContentDetailPage({
           ══════════════════════════════ */}
       <section className="relative w-full">
         {/* 백드롭 배경 이미지 */}
-        <div className="relative h-[50vh] w-full sm:h-[60vh] lg:h-[70vh]">
+        {/* 모바일에서 높이를 줄여 콘텐츠 접근성 개선 */}
+        <div className="relative h-[40vh] w-full sm:h-[50vh] md:h-[60vh] lg:h-[70vh]">
           <Image
             src={backdropUrl}
             alt={title}
@@ -237,18 +238,18 @@ export default async function ContentDetailPage({
         </div>
 
         {/* 히어로 콘텐츠 (포스터 + 정보) */}
-        <div className="absolute inset-x-0 bottom-0 px-4 pb-8 sm:px-8 lg:px-16">
-          <div className="mx-auto flex max-w-6xl gap-6 sm:gap-8">
-            {/* ── 포스터 이미지 ── */}
-            <div className="hidden shrink-0 sm:block">
-              <div className="relative h-[280px] w-[190px] overflow-hidden rounded-xl shadow-2xl shadow-black/50 md:h-[340px] md:w-[230px] lg:h-[400px] lg:w-[270px]">
+        <div className="absolute inset-x-0 bottom-0 px-4 pb-6 sm:px-8 lg:px-16">
+          <div className="mx-auto flex max-w-6xl gap-4 sm:gap-6 md:gap-8">
+            {/* ── 포스터 이미지: 모바일에서 작게, sm 이상에서 크게 ── */}
+            <div className="shrink-0">
+              <div className="relative h-[160px] w-[107px] overflow-hidden rounded-lg shadow-2xl shadow-black/50 sm:h-[280px] sm:w-[190px] md:h-[340px] md:w-[230px] lg:h-[400px] lg:w-[270px]">
                 <Image
                   src={posterUrl}
                   alt={title}
                   fill
                   priority
                   className="object-cover"
-                  sizes="(max-width: 768px) 190px, (max-width: 1024px) 230px, 270px"
+                  sizes="(max-width: 640px) 107px, (max-width: 768px) 190px, (max-width: 1024px) 230px, 270px"
                 />
               </div>
             </div>
@@ -256,23 +257,23 @@ export default async function ContentDetailPage({
             {/* ── 콘텐츠 정보 ── */}
             <div className="flex flex-1 flex-col justify-end">
               {/* 제목 (한글) */}
-              <h1 className="mb-1 text-2xl font-black leading-tight text-white drop-shadow-lg sm:text-3xl md:text-4xl lg:text-5xl">
+              <h1 className="mb-1 text-lg font-black leading-tight text-white drop-shadow-lg sm:text-2xl md:text-3xl lg:text-5xl">
                 {title}
               </h1>
 
-              {/* 원제 (다른 경우만 표시) */}
+              {/* 원제 (다른 경우만 표시, 모바일에서 숨김) */}
               {originalTitle !== title && (
-                <p className="mb-3 text-sm text-white/60 sm:text-base">
+                <p className="mb-2 hidden text-sm text-white/60 sm:block sm:mb-3 sm:text-base">
                   {originalTitle}
                 </p>
               )}
 
               {/* 메타 정보: 평점 · 연도 · 장르 · 런타임 */}
-              <div className="mb-4 flex flex-wrap items-center gap-x-3 gap-y-1.5">
+              <div className="mb-2 flex flex-wrap items-center gap-x-2 gap-y-1 sm:mb-4 sm:gap-x-3 sm:gap-y-1.5">
                 {/* TMDB 평점 */}
-                <span className="flex items-center gap-1 text-sm font-bold text-gold sm:text-base">
+                <span className="flex items-center gap-1 text-xs font-bold text-gold sm:text-sm md:text-base">
                   ★ {voteAverage.toFixed(1)}
-                  <span className="text-xs font-normal text-white/50">
+                  <span className="hidden text-xs font-normal text-white/50 sm:inline">
                     ({voteCount.toLocaleString()})
                   </span>
                 </span>
@@ -280,18 +281,18 @@ export default async function ContentDetailPage({
                 <span className="text-white/30">·</span>
 
                 {/* 연도 */}
-                <span className="text-sm text-white/80">{releaseYear}</span>
+                <span className="text-xs text-white/80 sm:text-sm">{releaseYear}</span>
 
-                <span className="text-white/30">·</span>
+                <span className="hidden text-white/30 sm:inline">·</span>
 
-                {/* 런타임/시즌 */}
-                <span className="text-sm text-white/80">{runtimeOrSeasons}</span>
+                {/* 런타임/시즌 (모바일에서 숨김) */}
+                <span className="hidden text-sm text-white/80 sm:inline">{runtimeOrSeasons}</span>
 
-                {/* 상태 뱃지 */}
+                {/* 상태 뱃지 (모바일에서 숨김) */}
                 {status && (
                   <>
-                    <span className="text-white/30">·</span>
-                    <span className="rounded-md bg-white/10 px-2 py-0.5 text-xs text-white/70">
+                    <span className="hidden text-white/30 sm:inline">·</span>
+                    <span className="hidden rounded-md bg-white/10 px-2 py-0.5 text-xs text-white/70 sm:inline">
                       {status}
                     </span>
                   </>
@@ -299,22 +300,22 @@ export default async function ContentDetailPage({
               </div>
 
               {/* 장르 태그 */}
-              <div className="mb-4 flex flex-wrap gap-2">
-                {genres.map((genre) => (
+              <div className="mb-2 flex flex-wrap gap-1.5 sm:mb-4 sm:gap-2">
+                {genres.slice(0, 3).map((genre) => (
                   <Link
                     key={genre.id}
                     href={`/genre/${genre.id}?type=${contentType}`}
-                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-white/90
-                               backdrop-blur-sm transition-colors hover:bg-white/20 sm:text-sm"
+                    className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium text-white/90
+                               backdrop-blur-sm transition-colors hover:bg-white/20 sm:px-3 sm:py-1 sm:text-xs md:text-sm"
                   >
                     {genre.name}
                   </Link>
                 ))}
               </div>
 
-              {/* 감독/제작 정보 */}
+              {/* 감독/제작 정보 (모바일에서 숨김) */}
               {director && (
-                <p className="mb-4 text-sm text-white/70">
+                <p className="mb-4 hidden text-sm text-white/70 sm:block">
                   <span className="font-semibold text-white/90">
                     {isMovie ? "감독" : "제작"}
                   </span>

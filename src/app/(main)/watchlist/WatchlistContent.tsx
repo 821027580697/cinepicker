@@ -136,12 +136,12 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
   };
 
   return (
-    <section className="mx-auto max-w-7xl px-4 py-8">
+    <section className="mx-auto max-w-7xl px-4 py-6 sm:py-8">
       {/* ── 헤더 ── */}
-      <h1 className="mb-6 text-2xl font-bold text-foreground">❤️ 보고싶다</h1>
+      <h1 className="mb-4 text-xl font-bold text-foreground sm:mb-6 sm:text-2xl">❤️ 보고싶다</h1>
 
       {/* ── 탭 필터 ── */}
-      <div className="mb-6 flex gap-2">
+      <div className="mb-4 flex gap-1.5 sm:mb-6 sm:gap-2">
         {[
           { id: "all" as TabFilter, label: `전체 (${items.length})` },
           { id: "movie" as TabFilter, label: `영화 (${movieCount})` },
@@ -151,7 +151,7 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
             key={tab.id}
             onClick={() => setFilter(tab.id)}
             className={cn(
-              "rounded-full px-4 py-2 text-sm font-semibold transition-all",
+              "rounded-full px-3 py-1.5 text-xs font-semibold transition-all sm:px-4 sm:py-2 sm:text-sm",
               filter === tab.id
                 ? "bg-primary text-white"
                 : "bg-surface text-muted hover:bg-surface-hover hover:text-foreground"
@@ -225,15 +225,15 @@ export default function WatchlistContent({ items: initialItems }: WatchlistConte
                     )}
                   </div>
 
-                  {/* 제거 버튼 */}
+                  {/* 제거 버튼: 모바일에서 항상 표시, 데스크톱에서 호버 시 표시 */}
                   <button
                     onClick={() => handleRemove(item)}
                     disabled={removingId === item.id}
                     className={cn(
-                      "absolute right-2 top-2 flex h-7 w-7 items-center justify-center rounded-full",
+                      "absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full sm:h-7 sm:w-7",
                       "bg-black/60 text-white backdrop-blur-sm transition-all",
-                      "opacity-0 group-hover:opacity-100",
-                      "hover:bg-red-500",
+                      "opacity-100 sm:opacity-0 sm:group-hover:opacity-100",
+                      "active:bg-red-500 sm:hover:bg-red-500",
                       "disabled:opacity-50"
                     )}
                     aria-label="보고싶다에서 제거"

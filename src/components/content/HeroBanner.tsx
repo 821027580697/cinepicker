@@ -144,7 +144,8 @@ export default function HeroBanner({ items }: HeroBannerProps) {
       aria-label="히어로 배너 슬라이더"
     >
       {/* ── 배경 이미지 레이어 ── */}
-      <div className="relative h-[50vh] w-full sm:h-[60vh] md:h-[70vh] lg:h-[80vh]">
+      {/* 모바일에서 높이를 더 줄여 콘텐츠가 잘리지 않도록 */}
+      <div className="relative h-[45vh] w-full sm:h-[60vh] md:h-[70vh] lg:h-[80vh]">
         <AnimatePresence initial={false} custom={direction} mode="popLayout">
           <motion.div
             key={currentItem.id}
@@ -177,7 +178,7 @@ export default function HeroBanner({ items }: HeroBannerProps) {
 
         {/* ── 콘텐츠 정보 오버레이 ── */}
         <div className="absolute inset-0 flex items-end">
-          <div className="w-full px-4 pb-16 sm:px-8 sm:pb-20 lg:px-16 lg:pb-24">
+          <div className="w-full px-4 pb-14 sm:px-8 sm:pb-20 lg:px-16 lg:pb-24">
             <AnimatePresence mode="wait">
               <motion.div
                 key={currentItem.id}
@@ -201,62 +202,63 @@ export default function HeroBanner({ items }: HeroBannerProps) {
                 </h1>
 
                 {/* 평점 + 장르 태그 */}
-                <div className="mb-3 flex flex-wrap items-center gap-2">
+                <div className="mb-2 flex flex-wrap items-center gap-1.5 sm:mb-3 sm:gap-2">
                   {/* 평점 */}
-                  <span className="flex items-center gap-1 text-sm font-semibold text-gold sm:text-base">
+                  <span className="flex items-center gap-1 text-xs font-semibold text-gold sm:text-sm md:text-base">
                     ★ {currentItem.vote_average.toFixed(1)}
                   </span>
 
                   {/* 구분선 */}
                   <span className="text-white/30">|</span>
 
-                  {/* 장르 태그 */}
-                  {genres.map((genre) => (
+                  {/* 장르 태그 (모바일에서 최대 2개) */}
+                  {genres.slice(0, 2).map((genre) => (
                     <span
                       key={genre}
-                      className="rounded-full bg-white/15 px-2.5 py-0.5 text-xs font-medium
-                                 text-white/90 backdrop-blur-sm sm:text-sm"
+                      className="rounded-full bg-white/15 px-2 py-0.5 text-[10px] font-medium
+                                 text-white/90 backdrop-blur-sm sm:px-2.5 sm:text-xs md:text-sm"
                     >
                       {genre}
                     </span>
                   ))}
                 </div>
 
-                {/* 줄거리 (2줄 제한) */}
+                {/* 줄거리 (모바일 1줄, 데스크톱 2줄 제한) */}
                 {currentItem.overview && (
-                  <p className="mb-5 line-clamp-2 max-w-xl text-sm leading-relaxed text-white/80 sm:text-base">
+                  <p className="mb-3 line-clamp-1 max-w-xl text-xs leading-relaxed text-white/80 sm:mb-5 sm:line-clamp-2 sm:text-sm md:text-base">
                     {truncateText(currentItem.overview, 150)}
                   </p>
                 )}
 
                 {/* 액션 버튼 */}
-                <div className="flex gap-3">
+                <div className="flex gap-2 sm:gap-3">
                   {/* 예고편 보기 버튼 */}
                   <Link
                     href={detailUrl}
-                    className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5
-                               text-sm font-bold text-white shadow-lg shadow-primary/30
+                    className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2
+                               text-xs font-bold text-white shadow-lg shadow-primary/30
                                transition-all hover:bg-primary-hover hover:shadow-xl
-                               hover:shadow-primary/40 sm:px-6 sm:py-3 sm:text-base"
+                               hover:shadow-primary/40 sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       viewBox="0 0 24 24"
                       fill="currentColor"
-                      className="h-5 w-5"
+                      className="h-4 w-4 sm:h-5 sm:w-5"
                     >
                       <path d="M8 5v14l11-7z" />
                     </svg>
-                    예고편 보기
+                    <span className="hidden sm:inline">예고편 보기</span>
+                    <span className="sm:hidden">예고편</span>
                   </Link>
 
                   {/* 보고싶다 버튼 */}
                   <button
                     type="button"
-                    className="flex items-center gap-2 rounded-lg border border-white/30
-                               bg-white/10 px-4 py-2.5 text-sm font-bold text-white
+                    className="flex items-center gap-1.5 rounded-lg border border-white/30
+                               bg-white/10 px-3 py-2 text-xs font-bold text-white
                                backdrop-blur-sm transition-all hover:bg-white/20
-                               sm:px-6 sm:py-3 sm:text-base"
+                               sm:gap-2 sm:px-6 sm:py-3 sm:text-base"
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -264,7 +266,7 @@ export default function HeroBanner({ items }: HeroBannerProps) {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth={2}
-                      className="h-5 w-5"
+                      className="h-4 w-4 sm:h-5 sm:w-5"
                     >
                       <line x1="12" y1="5" x2="12" y2="19" />
                       <line x1="5" y1="12" x2="19" y2="12" />

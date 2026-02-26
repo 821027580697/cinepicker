@@ -144,11 +144,11 @@ export default function ReviewList({ reviews, onWriteReview }: ReviewListProps) 
       className="py-8"
     >
       {/* ── 섹션 헤더 ── */}
-      <div className="mb-6 flex items-center justify-between">
-        <h2 className="text-xl font-bold text-foreground sm:text-2xl">
+      <div className="mb-4 flex items-center justify-between sm:mb-6">
+        <h2 className="text-lg font-bold text-foreground sm:text-xl md:text-2xl">
           ✍️ 유저 리뷰
           {reviews.length > 0 && (
-            <span className="ml-2 text-base font-normal text-muted">
+            <span className="ml-1.5 text-sm font-normal text-muted sm:ml-2 sm:text-base">
               ({reviews.length})
             </span>
           )}
@@ -157,9 +157,10 @@ export default function ReviewList({ reviews, onWriteReview }: ReviewListProps) 
         {/* 리뷰 쓰기 버튼 */}
         <button
           onClick={onWriteReview}
-          className="rounded-lg bg-primary px-4 py-2 text-sm font-bold text-white
+          className="rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-white
                      shadow-md shadow-primary/20 transition-all
-                     hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30"
+                     hover:bg-primary-hover hover:shadow-lg hover:shadow-primary/30
+                     sm:px-4 sm:py-2 sm:text-sm"
         >
           ✍ 리뷰 쓰기
         </button>
@@ -169,7 +170,7 @@ export default function ReviewList({ reviews, onWriteReview }: ReviewListProps) 
       {reviews.length > 0 ? (
         <>
           {/* 평점 요약 + 분포 */}
-          <div className="mb-6 flex flex-col gap-6 rounded-xl border border-border bg-card p-5 sm:flex-row sm:items-center">
+          <div className="mb-4 flex flex-col gap-4 rounded-xl border border-border bg-card p-4 sm:mb-6 sm:flex-row sm:items-center sm:gap-6 sm:p-5">
             {/* 평균 평점 */}
             <div className="flex flex-col items-center gap-1 sm:min-w-[120px]">
               <span className="text-4xl font-black text-gold">

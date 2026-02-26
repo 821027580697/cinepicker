@@ -86,13 +86,13 @@ export default function ProfileContent({ profile }: ProfileContentProps) {
   const initial = user.name.charAt(0).toUpperCase();
 
   return (
-    <section className="mx-auto max-w-4xl px-4 py-8">
+    <section className="mx-auto max-w-4xl px-4 py-6 sm:py-8">
       {/* ── 프로필 카드 ── */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="rounded-2xl border border-border bg-card p-6 shadow-lg sm:p-8"
+        className="rounded-2xl border border-border bg-card p-4 shadow-lg sm:p-6 md:p-8"
       >
         <div className="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
           {/* 아바타 */}
@@ -125,7 +125,7 @@ export default function ProfileContent({ profile }: ProfileContentProps) {
         </div>
 
         {/* ── 통계 카드 ── */}
-        <div className="mt-8 grid grid-cols-3 gap-4">
+        <div className="mt-6 grid grid-cols-3 gap-2 sm:mt-8 sm:gap-4">
           <StatCard label="작성 리뷰" value={stats.totalReviews} unit="개" />
           <StatCard
             label="평균 평점"
@@ -138,14 +138,14 @@ export default function ProfileContent({ profile }: ProfileContentProps) {
       </motion.div>
 
       {/* ── 탭 네비게이션 ── */}
-      <div className="mt-8">
-        <div className="flex gap-1 border-b border-border">
+      <div className="mt-6 sm:mt-8">
+        <div className="flex gap-0.5 border-b border-border sm:gap-1">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={cn(
-                "relative flex items-center gap-1.5 px-4 py-3 text-sm font-semibold transition-colors",
+                "relative flex items-center gap-1 px-3 py-2.5 text-xs font-semibold transition-colors sm:gap-1.5 sm:px-4 sm:py-3 sm:text-sm",
                 activeTab === tab.id
                   ? "text-primary"
                   : "text-muted hover:text-foreground"
@@ -284,18 +284,18 @@ interface StatCardProps {
 
 function StatCard({ label, value, unit, highlight }: StatCardProps) {
   return (
-    <div className="rounded-xl bg-surface p-4 text-center">
-      <p className="text-xs text-muted">{label}</p>
-      <p className="mt-1">
+    <div className="rounded-xl bg-surface p-3 text-center sm:p-4">
+      <p className="text-[10px] text-muted sm:text-xs">{label}</p>
+      <p className="mt-0.5 sm:mt-1">
         <span
           className={cn(
-            "text-2xl font-bold",
+            "text-lg font-bold sm:text-2xl",
             highlight ? "text-gold" : "text-foreground"
           )}
         >
           {value}
         </span>
-        <span className="ml-1 text-sm text-muted">{unit}</span>
+        <span className="ml-0.5 text-xs text-muted sm:ml-1 sm:text-sm">{unit}</span>
       </p>
     </div>
   );

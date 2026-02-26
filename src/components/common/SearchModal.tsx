@@ -249,7 +249,7 @@ export default function SearchModal() {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.2 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center bg-overlay pt-[10vh]"
+          className="fixed inset-0 z-[100] flex items-start justify-center bg-overlay pt-0 sm:pt-[10vh]"
           onClick={(e) => {
             /* 배경 영역 클릭 시에만 닫기 */
             if (e.target === e.currentTarget) closeSearch();
@@ -261,12 +261,30 @@ export default function SearchModal() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -20, scale: 0.98 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="mx-4 w-full max-w-2xl overflow-hidden rounded-2xl border border-border
-                       bg-background shadow-2xl"
+            className="mx-0 flex h-full w-full flex-col overflow-hidden border-border bg-background shadow-2xl
+                       sm:mx-4 sm:h-auto sm:max-w-2xl sm:rounded-2xl sm:border"
           >
             {/* ── 검색 입력 영역 ── */}
-            <div className="flex items-center gap-3 border-b border-border px-5 py-4">
-              {/* 검색 아이콘 */}
+            <div className="flex items-center gap-3 border-b border-border px-4 py-3 sm:px-5 sm:py-4">
+              {/* 모바일: 뒤로가기 버튼 */}
+              <button
+                onClick={closeSearch}
+                className="shrink-0 text-muted hover:text-foreground sm:hidden"
+                aria-label="검색 닫기"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  className="h-5 w-5"
+                >
+                  <polyline points="15 18 9 12 15 6" />
+                </svg>
+              </button>
+
+              {/* 검색 아이콘 (데스크톱만 표시) */}
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -275,7 +293,7 @@ export default function SearchModal() {
                 strokeWidth={2}
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                className="h-5 w-5 shrink-0 text-muted"
+                className="hidden h-5 w-5 shrink-0 text-muted sm:block"
               >
                 <circle cx="11" cy="11" r="8" />
                 <line x1="21" y1="21" x2="16.65" y2="16.65" />
@@ -329,8 +347,8 @@ export default function SearchModal() {
               </kbd>
             </div>
 
-            {/* ── 콘텐츠 영역 (최대 높이 제한, 스크롤) ── */}
-            <div className="max-h-[60vh] overflow-y-auto">
+            {/* ── 콘텐츠 영역 (모바일: 전체 높이, 데스크톱: 최대 60vh) ── */}
+            <div className="flex-1 overflow-y-auto sm:max-h-[60vh]">
               {/* 검색 결과가 있을 때: 탭 + 결과 목록 */}
               {results.length > 0 && (
                 <>

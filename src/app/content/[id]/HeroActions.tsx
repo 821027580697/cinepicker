@@ -71,21 +71,21 @@ export default function HeroActions({
   return (
     <>
       {/* ── 액션 버튼 그룹 ── */}
-      <div className="flex flex-wrap gap-2.5">
+      <div className="flex flex-wrap gap-1.5 sm:gap-2.5">
         {/* 예고편 보기 버튼 */}
         {hasTrailer && trailerKey && (
           <button
             onClick={() => setShowTrailer(true)}
-            className="flex items-center gap-2 rounded-lg bg-primary px-4 py-2.5
-                       text-sm font-bold text-white shadow-lg shadow-primary/30
+            className="flex items-center gap-1.5 rounded-lg bg-primary px-3 py-2
+                       text-xs font-bold text-white shadow-lg shadow-primary/30
                        transition-all hover:bg-primary-hover hover:shadow-xl
-                       hover:shadow-primary/40 sm:px-5 sm:py-3 sm:text-base"
+                       hover:shadow-primary/40 sm:gap-2 sm:px-5 sm:py-3 sm:text-base"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              className="h-5 w-5"
+              className="h-4 w-4 sm:h-5 sm:w-5"
             >
               <path d="M8 5v14l11-7z" />
             </svg>
@@ -97,7 +97,7 @@ export default function HeroActions({
         <button
           onClick={() => setIsWishlisted((prev) => !prev)}
           className={cn(
-            "flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-bold transition-all sm:px-5 sm:py-3 sm:text-base",
+            "flex items-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-bold transition-all sm:gap-2 sm:px-5 sm:py-3 sm:text-base",
             isWishlisted
               ? "border-primary bg-primary/20 text-primary"
               : "border-white/30 bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
@@ -110,7 +110,7 @@ export default function HeroActions({
             fill={isWishlisted ? "currentColor" : "none"}
             stroke="currentColor"
             strokeWidth={2}
-            className="h-5 w-5"
+            className="h-4 w-4 sm:h-5 sm:w-5"
           >
             <path
               strokeLinecap="round"
@@ -118,15 +118,16 @@ export default function HeroActions({
               d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z"
             />
           </svg>
-          {isWishlisted ? "보고싶다 ✓" : "보고싶다"}
+          <span className="hidden sm:inline">{isWishlisted ? "보고싶다 ✓" : "보고싶다"}</span>
+          <span className="sm:hidden">{isWishlisted ? "✓" : "♡"}</span>
         </button>
 
-        {/* 리뷰 쓰기 버튼 */}
+        {/* 리뷰 쓰기 버튼 (모바일에서 아이콘만) */}
         <button
-          className="flex items-center gap-2 rounded-lg border border-white/30
-                     bg-white/10 px-4 py-2.5 text-sm font-bold text-white
+          className="flex items-center gap-1.5 rounded-lg border border-white/30
+                     bg-white/10 px-3 py-2 text-xs font-bold text-white
                      backdrop-blur-sm transition-all hover:bg-white/20
-                     sm:px-5 sm:py-3 sm:text-base"
+                     sm:gap-2 sm:px-5 sm:py-3 sm:text-base"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -134,7 +135,7 @@ export default function HeroActions({
             fill="none"
             stroke="currentColor"
             strokeWidth={2}
-            className="h-5 w-5"
+            className="h-4 w-4 sm:h-5 sm:w-5"
           >
             <path
               strokeLinecap="round"
@@ -142,17 +143,17 @@ export default function HeroActions({
               d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L10.582 16.07a4.5 4.5 0 01-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 011.13-1.897l8.932-8.931zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0115.75 21H5.25A2.25 2.25 0 013 18.75V8.25A2.25 2.25 0 015.25 6H10"
             />
           </svg>
-          리뷰
+          <span className="hidden sm:inline">리뷰</span>
         </button>
 
         {/* 공유 버튼 */}
         <div className="relative">
           <button
             onClick={handleShare}
-            className="flex items-center gap-2 rounded-lg border border-white/30
-                       bg-white/10 px-3 py-2.5 text-sm font-bold text-white
+            className="flex items-center gap-1.5 rounded-lg border border-white/30
+                       bg-white/10 px-3 py-2 text-xs font-bold text-white
                        backdrop-blur-sm transition-all hover:bg-white/20
-                       sm:px-4 sm:py-3 sm:text-base"
+                       sm:gap-2 sm:px-4 sm:py-3 sm:text-base"
             aria-label="공유"
           >
             <svg

@@ -13,7 +13,8 @@ import { FOOTER_LINKS, TMDB } from "@/constants";
 export default function Footer() {
   return (
     <footer className="border-t border-border bg-surface" role="contentinfo">
-      <div className="mx-auto max-w-7xl px-4 py-10 lg:px-8">
+      {/* 모바일에서 MobileNav(h-14 + safe-area) 높이만큼 하단 여백 추가 */}
+      <div className="mx-auto max-w-7xl px-4 py-6 pb-20 sm:py-10 sm:pb-10 lg:px-8">
         {/* ── 상단: 로고 + 링크 + TMDB 출처 ── */}
         <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
           {/* 로고 */}
@@ -22,8 +23,8 @@ export default function Footer() {
             <span className="text-foreground">Pickr</span>
           </Link>
 
-          {/* 네비게이션 링크 */}
-          <nav aria-label="푸터 네비게이션">
+          {/* 네비게이션 링크 (모바일에서 숨김 - MobileNav로 대체) */}
+          <nav aria-label="푸터 네비게이션" className="hidden sm:block">
             <ul className="flex flex-wrap items-center justify-center gap-4 text-sm">
               {FOOTER_LINKS.map((link) => (
                 <li key={link.href}>

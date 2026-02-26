@@ -218,7 +218,7 @@ export default function MyReviewsList({ reviews: initialReviews }: MyReviewsList
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, x: -100 }}
               transition={{ duration: 0.3 }}
-              className="rounded-xl border border-border bg-card p-5"
+              className="rounded-xl border border-border bg-card p-4 sm:p-5"
             >
               {/* ── 리뷰 헤더 ── */}
               <div className="flex items-start justify-between">

@@ -8,7 +8,7 @@
  * - 공통 메타데이터 설정 (한글 title, description, OG 태그)
  */
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { AuthProvider } from "@/providers/auth-provider";
@@ -20,6 +20,19 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
 });
+
+/** 모바일 뷰포트 설정: 줌 방지 + safe-area 대응 */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+  ],
+};
 
 /** 공통 메타데이터 및 OG 태그 */
 export const metadata: Metadata = {

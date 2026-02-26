@@ -16,12 +16,11 @@
  */
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signIn } from "next-auth/react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { useScroll } from "@/hooks/use-scroll";
 import { useAppStore } from "@/store/use-app-store";
 import { NAV_ITEMS } from "@/constants";
@@ -33,9 +32,6 @@ export default function Header() {
   const { isScrolled } = useScroll(20);
   const { data: session } = useSession();
   const { openSearch } = useAppStore();
-
-  /** 모바일 메뉴 열림 상태 */
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   /**
    * 현재 경로가 네비게이션 항목과 일치하는지 확인
@@ -161,86 +157,15 @@ export default function Header() {
             /* 비로그인 상태: 로그인 버튼 */
             <button
               onClick={() => signIn()}
-              className="ml-1 rounded-full bg-primary px-4 py-1.5 text-sm font-medium
-                         text-white hover:bg-primary-hover active:scale-95"
+              className="ml-1 hidden rounded-full bg-primary px-4 py-1.5 text-sm font-medium
+                         text-white hover:bg-primary-hover active:scale-95 md:inline-flex"
             >
               로그인
             </button>
           )}
 
-          {/* ── 모바일: 햄버거 메뉴 버튼 ── */}
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="ml-1 flex h-9 w-9 items-center justify-center rounded-full
-                       hover:bg-surface-hover md:hidden"
-            aria-label={isMobileMenuOpen ? "메뉴 닫기" : "메뉴 열기"}
-          >
-            <div className="relative flex h-5 w-5 flex-col items-center justify-center">
-              {/* 햄버거 → X 변환 애니메이션 */}
-              <motion.span
-                animate={{
-                  rotate: isMobileMenuOpen ? 45 : 0,
-                  y: isMobileMenuOpen ? 0 : -6,
-                }}
-                className="absolute h-0.5 w-5 rounded-full bg-foreground"
-                transition={{ duration: 0.3 }}
-              />
-              <motion.span
-                animate={{
-                  opacity: isMobileMenuOpen ? 0 : 1,
-                  scaleX: isMobileMenuOpen ? 0 : 1,
-                }}
-                className="absolute h-0.5 w-5 rounded-full bg-foreground"
-                transition={{ duration: 0.2 }}
-              />
-              <motion.span
-                animate={{
-                  rotate: isMobileMenuOpen ? -45 : 0,
-                  y: isMobileMenuOpen ? 0 : 6,
-                }}
-                className="absolute h-0.5 w-5 rounded-full bg-foreground"
-                transition={{ duration: 0.3 }}
-              />
-            </div>
-          </button>
         </div>
       </nav>
-
-      {/* ── 모바일 메뉴 (슬라이드 다운 애니메이션) ── */}
-      <AnimatePresence>
-        {isMobileMenuOpen && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className="overflow-hidden border-b border-border bg-background/95
-                       backdrop-blur-lg md:hidden"
-          >
-            <ul className="flex flex-col px-4 py-4">
-              {NAV_ITEMS.map((item) => {
-                const active = isActiveLink(item.href);
-                return (
-                  <li key={item.href}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={cn(
-                        "block rounded-lg px-4 py-3 text-base font-medium transition-colors duration-300",
-                        active
-                          ? "bg-primary/10 text-primary"
-                          : "text-muted hover:bg-surface-hover hover:text-foreground"
-                      )}
-                    >
-                      {item.label}
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </header>
   );
 }
